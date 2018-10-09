@@ -30,6 +30,10 @@ fi
 for inarg in "$@"; do 
 #for each $inarg do case-switch
 case "${inarg}" in
+build)
+    echo $hline
+    echo "Nothing to build"
+    ;;
 run)
     echo $hline
     echo "Create data container '${datacontainer}' if not exist"
