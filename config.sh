@@ -34,6 +34,7 @@ run)
     echo $hline
     echo "Create data container '${datacontainer}' if not exist"
     docker volume create --name "${datacontainer}"
+
     echo "Instantiate container '${containername}' from the '${pg_image}:${pg_version}' image now"
     docker run -it \
         --name "${containername}" \
@@ -41,6 +42,11 @@ run)
         -p "${containerport}:5432" \
         -d "${pg_image}:${pg_version}" 
     echo "*** Container Instantiation Completed ***"
+
+    echo "Install SQL in the container"
+    until pg_isready -h localhost -p ${containerport} -U postgres; do sleep 1; done
+    psql -h localhost -p ${containerport} -U postgres -w -f install.sql
+    echo "*** install.sql injected ***"
     ;;
 start)
     #no fancy echo/print messages
