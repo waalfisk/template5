@@ -1,9 +1,11 @@
-# template5
+# template5 - PSQL server
 This template installs a PostgreSQL server as container.
 
 * Data Container: It uses a specified data volume container that might be created if it not exist yet.
 * Dockerfile: There is no Dockerfile because this template uses PostgreSQL image with its default settings
 * Credentials: The default settings `POSTGRES_USER=postgres`, `POSTGRES_PASSWORD=postgres` and `POSTGRES_DB=postgres` remain untouched. 
+* IP Address: Container is part of docker network (set `netname` in `config.conf`) with a static IP address (set `ipaddr4` in `config.conf`) for container-to-container communication
+
 
 ## How to use
 1) Download
@@ -13,11 +15,28 @@ git clone git@github.com:waalfisk/template5.git mynewname
 cd mynewname
 ```
 
-2) Edit `config.conf` to your needs
+2) Network settings
+Requires a bridge network, e.g.
 
-3) Execute `./config.sh run` 
+```
+docker network create \
+    --subnet=172.64.0.0/16 \
+    --driver=bridge \
+    mynet
+```
 
-4) Access the database `postgres` as user `postgres` and start doing stuff.
+3) Edit `config.conf` to your needs
+
+    * set `containername`
+    * set `containerport`, the PSQL server port on the host machine
+    * set `datacontainer`, the name of the data volume
+    * set `netname`, the docker network name
+    * set `ipaddr4`, the static IP address within the docker network
+
+4) Execute `./config.sh run` 
+
+5) Access the database `postgres` as user `postgres` and start doing stuff.
+
 
 ## Commands
 Use the following commands to install, start, or uninstall the images or container.

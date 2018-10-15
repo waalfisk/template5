@@ -41,6 +41,8 @@ run)
 
     echo "Instantiate container '${containername}' from the '${pg_image}:${pg_version}' image now"
     docker run -it \
+        --ip="${ipaddr4}" \
+        --network="${netname}" \
         --name "${containername}" \
         -v "${datacontainer}:/var/lib/postgresql/data" \
         -p "${containerport}:5432" \
