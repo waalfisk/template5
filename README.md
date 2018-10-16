@@ -125,6 +125,10 @@ FROM myschema.mytable
 WHERE nono -> 'mymoney' IS NOT NULL;
 ```
 
+## Related templates
+* [template5](https://github.com/waalfisk/template5) -- Postgres Database
+* [template9](https://github.com/waalfisk/template9) -- Process with access to Postgres DB
+
 ## Links
 * [template5](https://github.com/waalfisk/template5)
 * [postgres](https://hub.docker.com/_/postgres/) docker image
